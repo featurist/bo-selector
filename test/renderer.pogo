@@ -21,9 +21,6 @@ Renderer = {
     selector_list () =
         this.selectors.map @(s) @{ Renderer.render(s) }.join(", ")
 
-    selector () =
-        render(this.element)
-
     combinator_selector () =
         descender = ' '
         if (this.combinator == 'child')

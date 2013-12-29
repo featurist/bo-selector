@@ -88,12 +88,10 @@ case 2: $$[$0-2].selectors.push($$[$0]); this.$ = $$[$0-2]
 break;
 case 3: this.$ = yy.create({ type: 'selector_list', selectors: [$$[$0]] }) 
 break;
-case 8: $$[$0-1].constraints = $$[$0].constraints; this.$ = yy.create({ type: 'selector', element: $$[$0-1] }) 
-break;
-case 9: this.$ = yy.create({ type: 'selector', element: $$[$0] }) 
+case 8: $$[$0-1].constraints = $$[$0].constraints; this.$ = $$[$0-1] 
 break;
 case 10: this.$ = yy.create(
-          { type: 'selector', element: { type: 'element', name: '*', constraints: $$[$0].constraints } }
+            { type: 'element', name: '*', constraints: $$[$0].constraints }
           )
         
 break;

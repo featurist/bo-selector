@@ -57,12 +57,11 @@ selector
 
 simple_selector
     : element constraint_list
-        { $1.constraints = $2.constraints; $$ = yy.create({ type: 'selector', element: $1 }) }
+        { $1.constraints = $2.constraints; $$ = $1 }
     | element
-        { $$ = yy.create({ type: 'selector', element: $1 }) }
     | constraint_list
         { $$ = yy.create(
-          { type: 'selector', element: { type: 'element', name: '*', constraints: $1.constraints } }
+            { type: 'element', name: '*', constraints: $1.constraints }
           )
         }
     ;
