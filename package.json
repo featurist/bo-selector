@@ -2,7 +2,7 @@
   "name": "bo-selector",
   "version": "0.0.1",
   "description": "CSS selector parser based on jison",
-  "main": "parser.js",
+  "main": "bo-selector.js",
   "directories": {
     "test": "test"
   },
