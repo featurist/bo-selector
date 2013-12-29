@@ -106,6 +106,8 @@ attrib
         { $$ = yy.create({ type: 'has_attribute', name: $2 }) }
     | '[' padded_ident INCLUDES padded_ident ']'
         { $$ = yy.create({ type: 'attribute_contains', name: $2, value: $4 }) }
+    | '[' padded_ident DASHMATCH padded_ident ']'
+        { $$ = yy.create({ type: 'attribute_starts_with', name: $2, value: $4 }) }
     | '[' padded_ident '=' padded_ident ']'
         { $$ = yy.create({ type: 'attribute_equals', name: $2, value: $4 }) }
     ;

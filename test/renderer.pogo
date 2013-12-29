@@ -40,6 +40,9 @@ Renderer = {
     attribute_contains () =
         "[#(this.name) ~= #(this.value)]"
 
+    attribute_starts_with () =
+        "[#(this.name) |= #(this.value)]"
+
     pseudo_class () =
         ":#(this.name)"
 
