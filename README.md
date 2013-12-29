@@ -2,6 +2,8 @@
 
 A CSS selector parser based on [jison](http://zaach.github.io/jison/)
 
+[![Build Status](https://secure.travis-ci.org/featurist/bo-selector.png?branch=master)](http://travis-ci.org/featurist/bo-selector)
+
 ### Example
 
 ```js
