@@ -8,6 +8,8 @@
 <<EOF>>                  return 'EOF';
 \~\=                     return 'INCLUDES';
 "|="                     return 'DASHMATCH';
+\"[^\n\r\f\\"]*\"        return 'STRING';
+\'[^\n\r\f\\']*\'        return 'STRING';
 '#'                      return '#';
 ","                      return ',';
 "."                      return '.';
@@ -18,8 +20,10 @@
 "("                      return '(';
 ")"                      return ')';
 ">"                      return '>';
+"'"                      return "'";
 "*"                      return '*';
 \s+                      return 'S';
+
 
 /lex
 
@@ -104,11 +108,11 @@ hash
 attrib
     : '[' padded_ident ']'
         { $$ = yy.create({ type: 'has_attribute', name: $2 }) }
-    | '[' padded_ident INCLUDES padded_ident ']'
+    | '[' padded_ident INCLUDES padded_ident_or_string ']'
         { $$ = yy.create({ type: 'attribute_contains', name: $2, value: $4 }) }
-    | '[' padded_ident DASHMATCH padded_ident ']'
+    | '[' padded_ident DASHMATCH padded_ident_or_string ']'
         { $$ = yy.create({ type: 'attribute_starts_with', name: $2, value: $4 }) }
-    | '[' padded_ident '=' padded_ident ']'
+    | '[' padded_ident '=' padded_ident_or_string ']'
         { $$ = yy.create({ type: 'attribute_equals', name: $2, value: $4 }) }
     ;
 
@@ -121,6 +125,23 @@ padded_ident
         { $$ = $1 }
     | IDENT
         { $$ = $1 }
+    ;
+
+padded_ident_or_string
+    : padded_ident
+    | S string S
+        { $$ = $1 }
+    | S string
+        { $$ = $2 }
+    | string S
+        { $$ = $1 }
+    | string
+        { $$ = $1 }
+    ;
+
+string
+    : STRING
+        { $$ = yy.create({ type: 'string', value: $1 }) }
     ;
 
 pseudo

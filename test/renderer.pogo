@@ -13,7 +13,10 @@ Node.prototype = {
 Renderer = {
 
     render (node) =
-        (Renderer.(node.type) || Renderer.missing).apply(node)
+        if (node :: String)
+            node
+        else
+            (Renderer.(node.type) || Renderer.missing).apply(node)
 
     selector_list () =
         this.selectors.map @(s) @{ Renderer.render(s) }.join(", ")
@@ -35,13 +38,13 @@ Renderer = {
         "[#(this.name)]"
 
     attribute_equals () =
-        "[#(this.name) = #(this.value)]"
+        "[#(this.name) = #(render(this.value))]"
 
     attribute_contains () =
-        "[#(this.name) ~= #(this.value)]"
+        "[#(this.name) ~= #(render(this.value))]"
 
     attribute_starts_with () =
-        "[#(this.name) |= #(this.value)]"
+        "[#(this.name) |= #(render(this.value))]"
 
     pseudo_class () =
         ":#(this.name)"
@@ -57,6 +60,9 @@ Renderer = {
 
     element () =
         this.name.replace('*', '') + ((this.constraints || []).map @(c) @{ render(c) }).join("")
+
+    string () =
+        "#(this.value)"
 
     missing () =
         throw (@new Error "Unable to render #(this.type)")
