@@ -6,11 +6,11 @@ A CSS selector parser based on [jison](http://zaach.github.io/jison/)
 
 ```js
 var parser = require('bo-selector').parser;
-var selector = 'p#zomg[title ~= noway] > b.yes-way, :that(:is(v.awesome))';
-var ast = parser.parse(selector);
+var ast = parser.parse('p:has(.foo), b');
 console.log(require('util').inspect(ast, false, null));
 ```
 
+Generates
 
 ```js
 { type: 'selector_list',
