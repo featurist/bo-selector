@@ -78,6 +78,8 @@ combinator_selector
         { $$ = yy.create({ type: 'combinator_selector', left: $1, right: $3, combinator: 'descendant' }) }
     | '>' S simple_selector
         { $$ = yy.create({ type: 'immediate_child', child: $3, combinator: 'child' }) }
+    | '>' simple_selector
+        { $$ = yy.create({ type: 'immediate_child', child: $2, combinator: 'child' }) }
     ;
 
 element
