@@ -66,7 +66,7 @@ simple_selector
     | element
     | constraint_list
         { $$ = yy.create(
-            { type: 'element', name: '*', constraints: $1.constraints }
+            { type: 'constraint_list', constraints: $1.constraints }
           )
         }
     ;

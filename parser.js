@@ -91,7 +91,7 @@ break;
 case 8: $$[$0-1].constraints = $$[$0].constraints; this.$ = $$[$0-1] 
 break;
 case 10: this.$ = yy.create(
-            { type: 'element', name: '*', constraints: $$[$0].constraints }
+            { type: 'constraint_list', constraints: $$[$0].constraints }
           )
         
 break;

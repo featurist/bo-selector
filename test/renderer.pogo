@@ -71,7 +71,10 @@ Renderer = {
         "##(this.name)"
 
     element () =
-        this.name + ((this.constraints || []).map @(c) @{ render(c) }).join("")
+        this.name + Renderer.constraint_list.call(this)
+
+    constraint_list () =
+        ((this.constraints || []).map @(c) @{ render(c) }).join("")
 
     string () =
         "#(this.value)"

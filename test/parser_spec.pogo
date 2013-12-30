@@ -19,9 +19,9 @@ describe 'parser'
     parses "a, b,c" as "a, b, c"
     parses "a.b"
     parses "a.b.c"
-    parses "#a" as "*#a"
-    parses "#a.b" as "*#a.b"
-    parses ".a #b" as "*.a *#b"
+    parses "#a"
+    parses "#a.b"
+    parses ".a #b"
     parses "a[b]"
     parses "a[b][c]"
 
@@ -116,19 +116,20 @@ describe 'parser'
     parses "> a > b" as "> a > b"
 
     parses "*:a"
-    parses ":a" as "*:a"
-    parses ":a-b" as "*:a-b"
+    parses ":a"
+    parses ":a-b"
     parses "a:b"
     parses "a:b:c"
-    parses ":a(b)" as "*:a(b)"
-    parses ":a-b(c)" as "*:a-b(c)"
+    parses ":a(b)"
+    parses ":a-b(c)"
     parses "a:b(c)"
     parses "a:b(c > d)"
 
-    parses ":has(> a)" as "*:has(> a)"
+    parses ":has(> a)" as ":has(> a)"
+    parses ":not(:not(b))" as ":not(:not(b))"
 
     parses "a:nth-child(123)" as "a:nth-child(123)"
 
-    parses "a[b = c], c[d]:e:f(g *:h:i[j]:k), :l > m[n ~= o][p = q].r.s" as (
-        "a[b = c], c[d]:e:f(g *:h:i[j]:k), *:l > m[n ~= o][p = q].r.s"
+    parses "a[b = c], c[d]:e:f(g *:h:i[j]:k), :l > m[n ~= o][p = 'q'].r.s" as (
+        "a[b = c], c[d]:e:f(g *:h:i[j]:k), :l > m[n ~= o][p = q].r.s"
     )
