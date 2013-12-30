@@ -46,6 +46,9 @@ Renderer = {
     attribute_starts_with () =
         "[#(this.name) |= #(render(this.value))]"
 
+    attribute_does_not_contain () =
+        "[#(this.name) != #(render(this.value))]"
+
     pseudo_class () =
         ":#(this.name)"
 
