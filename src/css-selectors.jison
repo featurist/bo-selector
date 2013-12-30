@@ -6,8 +6,9 @@
 %%
 [_a-zA-Z][_a-zA-Z0-9-]*  return 'IDENT';
 <<EOF>>                  return 'EOF';
-\~\=                     return 'INCLUDES';
-"|="                     return 'DASHMATCH';
+\~\=                     return 'CONTAINS_WORD';
+\*\=                     return 'CONTAINS';
+"|="                     return 'CONTAINS_PREFIX';
 \"[^\n\r\f\\"]*\"        return 'SINGLE_QUOTED_STRING';
 \'[^\n\r\f\\']*\'        return 'DOUBLE_QUOTED_STRING';
 '#'                      return '#';
@@ -109,10 +110,12 @@ hash
 attrib
     : '[' padded_ident ']'
         { $$ = yy.create({ type: 'has_attribute', name: $2 }) }
-    | '[' padded_ident INCLUDES padded_ident_or_string ']'
-        { $$ = yy.create({ type: 'attribute_contains', name: $2, value: $4 }) }
-    | '[' padded_ident DASHMATCH padded_ident_or_string ']'
+    | '[' padded_ident CONTAINS_WORD padded_ident_or_string ']'
+        { $$ = yy.create({ type: 'attribute_contains_word', name: $2, value: $4 }) }
+    | '[' padded_ident CONTAINS_PREFIX padded_ident_or_string ']'
         { $$ = yy.create({ type: 'attribute_starts_with', name: $2, value: $4 }) }
+    | '[' padded_ident CONTAINS padded_ident_or_string ']'
+        { $$ = yy.create({ type: 'attribute_contains', name: $2, value: $4 }) }
     | '[' padded_ident '=' padded_ident_or_string ']'
         { $$ = yy.create({ type: 'attribute_equals', name: $2, value: $4 }) }
     ;

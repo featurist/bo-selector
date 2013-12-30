@@ -7,7 +7,7 @@ describe 'parser'
 
     parses (input) as (output) =
         it "parses #(input) as #(output)"
-            parser.parse(input).render().should.equal(output.replace('*', ''))
+            parser.parse(input).render().should.equal(output)
 
     parses (input) =
         parses (input) as (input)
@@ -19,9 +19,9 @@ describe 'parser'
     parses "a, b,c" as "a, b, c"
     parses "a.b"
     parses "a.b.c"
-    parses "#a"
-    parses "#a.b"
-    parses ".a #b"
+    parses "#a" as "*#a"
+    parses "#a.b" as "*#a.b"
+    parses ".a #b" as "*.a *#b"
     parses "a[b]"
     parses "a[b][c]"
 
@@ -64,6 +64,19 @@ describe 'parser'
     parses 'a[b |="c"]' as 'a[b |= c]'
     parses 'a[b|="c"]' as 'a[b |= c]'
 
+    parses "a[b *= c]"
+    parses "a[b*= c]" as "a[b *= c]"
+    parses "a[b *=c]" as "a[b *= c]"
+    parses "a[b*=c]" as "a[b *= c]"
+    parses "a[b *= 'c']" as "a[b *= c]"
+    parses "a[b*= 'c']" as "a[b *= c]"
+    parses "a[b *='c']" as "a[b *= c]"
+    parses "a[b*='c']" as "a[b *= c]"
+    parses 'a[b *= "c"]' as "a[b *= c]"
+    parses 'a[b*= "c"]' as 'a[b *= c]'
+    parses 'a[b *="c"]' as 'a[b *= c]'
+    parses 'a[b*="c"]' as 'a[b *= c]'
+
     parses "a b"
     parses "a > b"
     parses "a> b" as "a > b"
@@ -75,15 +88,17 @@ describe 'parser'
     parses "> a > b" as "* > a > b"
 
     parses "*:a"
-    parses ":a"
-    parses ":a-b"
+    parses ":a" as "*:a"
+    parses ":a-b" as "*:a-b"
     parses "a:b"
     parses "a:b:c"
-    parses ":a(b)"
-    parses ":a-b(c)"
+    parses ":a(b)" as "*:a(b)"
+    parses ":a-b(c)" as "*:a-b(c)"
     parses "a:b(c)"
     parses "a:b(c > d)"
 
-    parses ":has(> a)" as ":has(* > a)"
+    parses ":has(> a)" as "*:has(* > a)"
 
-    parses "a[b = c], c[d]:e:f(g *:h:i[j]:k), :l > m[n ~= o][p = q]"
+    parses "a[b = c], c[d]:e:f(g *:h:i[j]:k), :l > m[n ~= o][p = q].r.s" as (
+        "a[b = c], c[d]:e:f(g *:h:i[j]:k), *:l > m[n ~= o][p = q].r.s"
+    )

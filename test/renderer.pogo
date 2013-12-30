@@ -37,8 +37,11 @@ Renderer = {
     attribute_equals () =
         "[#(this.name) = #(render(this.value))]"
 
-    attribute_contains () =
+    attribute_contains_word () =
         "[#(this.name) ~= #(render(this.value))]"
+
+    attribute_contains () =
+        "[#(this.name) *= #(render(this.value))]"
 
     attribute_starts_with () =
         "[#(this.name) |= #(render(this.value))]"
@@ -56,7 +59,7 @@ Renderer = {
         "##(this.name)"
 
     element () =
-        this.name.replace('*', '') + ((this.constraints || []).map @(c) @{ render(c) }).join("")
+        this.name + ((this.constraints || []).map @(c) @{ render(c) }).join("")
 
     string () =
         "#(this.value)"
