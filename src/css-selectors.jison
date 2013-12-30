@@ -67,8 +67,8 @@ simple_selector
     ;
 
 combinator_selector
-    : selector S '>' S simple_selector
-        { $$ = yy.create({ type: 'combinator_selector', left: $1, right: $5, combinator: 'child' }) }
+    : selector padded_child_combinator simple_selector
+        { $$ = yy.create({ type: 'combinator_selector', left: $1, right: $3, combinator: 'child' }) }
     | selector S simple_selector
         { $$ = yy.create({ type: 'combinator_selector', left: $1, right: $3, combinator: 'descendant' }) }
     | '>' S simple_selector
@@ -137,6 +137,17 @@ padded_ident_or_string
     | string S
         { $$ = $1 }
     | string
+        { $$ = $1 }
+    ;
+
+padded_child_combinator
+    : S '>' S
+        { $$ = $2 }
+    | S '>'
+        { $$ = $2 }
+    | '>' S
+        { $$ = $1 }
+    | '>'
         { $$ = $1 }
     ;
 

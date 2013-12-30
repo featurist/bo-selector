@@ -63,10 +63,15 @@ describe 'parser'
     parses 'a[b |="c"]' as 'a[b |= c]'
     parses 'a[b|="c"]' as 'a[b |= c]'
 
-    parses "a, [b = c], c"
     parses "a b"
     parses "a > b"
+    parses "a> b" as "a > b"
+    parses "a >b" as "a > b"
+    parses "a>b" as "a > b"
+    parses "a>b >c" as "a > b > c"
     parses "a > b > c d"
+
+    parses "a, [b = c], c"
     parses "*:a"
     parses ":a"
     parses ":a-b"
