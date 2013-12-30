@@ -71,6 +71,8 @@ combinator_selector
         { $$ = yy.create({ type: 'combinator_selector', left: $1, right: $5, combinator: 'child' }) }
     | selector S simple_selector
         { $$ = yy.create({ type: 'combinator_selector', left: $1, right: $3, combinator: 'descendant' }) }
+    | '>' S simple_selector
+        { $$ = yy.create({ type: 'combinator_selector', left: yy.create({ type: 'element', name: '*', constraints: [] }), right: $3, combinator: 'child' }) }
     ;
 
 element

@@ -77,3 +77,6 @@ describe 'parser'
     parses "a:b(c)"
     parses "a:b(c > d)"
     parses "a[b = c], c[d]:e:f(g *:h:i[j]:k), :l > m[n ~= o]"
+
+    parses "> a" as "* > a"
+    parses ":has(> a)" as ":has(* > a)"
