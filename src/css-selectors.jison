@@ -8,8 +8,8 @@
 <<EOF>>                  return 'EOF';
 \~\=                     return 'INCLUDES';
 "|="                     return 'DASHMATCH';
-\"[^\n\r\f\\"]*\"        return 'STRING';
-\'[^\n\r\f\\']*\'        return 'STRING';
+\"[^\n\r\f\\"]*\"        return 'SINGLE_QUOTED_STRING';
+\'[^\n\r\f\\']*\'        return 'DOUBLE_QUOTED_STRING';
 '#'                      return '#';
 ","                      return ',';
 "."                      return '.';
@@ -139,8 +139,10 @@ padded_ident_or_string
     ;
 
 string
-    : STRING
-        { $$ = yy.create({ type: 'string', value: $1 }) }
+    : SINGLE_QUOTED_STRING
+        { $$ = $1.substr(1, $1.length - 2) }
+    | DOUBLE_QUOTED_STRING
+        { $$ = $1.substr(1, $1.length - 2) }
     ;
 
 pseudo
