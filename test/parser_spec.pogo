@@ -23,6 +23,7 @@ describe 'parser'
     parses "#a.b"
     parses ".a #b"
     parses "a[b]"
+    parses "a[b][c]"
 
     parses "a[b = c]"
     parses "a[b= c]" as "a[b = c]"
@@ -70,8 +71,9 @@ describe 'parser'
     parses "a>b" as "a > b"
     parses "a>b >c" as "a > b > c"
     parses "a > b > c d"
+    parses "> a" as "* > a"
+    parses "> a > b" as "* > a > b"
 
-    parses "a, [b = c], c"
     parses "*:a"
     parses ":a"
     parses ":a-b"
@@ -81,7 +83,7 @@ describe 'parser'
     parses ":a-b(c)"
     parses "a:b(c)"
     parses "a:b(c > d)"
-    parses "a[b = c], c[d]:e:f(g *:h:i[j]:k), :l > m[n ~= o]"
 
-    parses "> a" as "* > a"
     parses ":has(> a)" as ":has(* > a)"
+
+    parses "a[b = c], c[d]:e:f(g *:h:i[j]:k), :l > m[n ~= o][p = q]"
