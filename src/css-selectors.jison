@@ -10,6 +10,8 @@
 \*\=                     return 'CONTAINS';
 "|="                     return 'CONTAINS_PREFIX';
 "!="                     return 'DOES_NOT_CONTAIN';
+"^="                     return 'STARTS_WITH';
+"$="                     return 'ENDS_WITH';
 \"[^\n\r\f\\"]*\"        return 'SINGLE_QUOTED_STRING';
 \'[^\n\r\f\\']*\'        return 'DOUBLE_QUOTED_STRING';
 '#'                      return '#';
@@ -111,16 +113,20 @@ hash
 attrib
     : '[' padded_ident ']'
         { $$ = yy.create({ type: 'has_attribute', name: $2 }) }
+    | '[' padded_ident '=' padded_ident_or_string ']'
+        { $$ = yy.create({ type: 'attribute_equals', name: $2, value: $4 }) }
+    | '[' padded_ident CONTAINS padded_ident_or_string ']'
+        { $$ = yy.create({ type: 'attribute_contains', name: $2, value: $4 }) }
+    | '[' padded_ident DOES_NOT_CONTAIN padded_ident_or_string ']'
+        { $$ = yy.create({ type: 'attribute_does_not_contain', name: $2, value: $4 }) }
     | '[' padded_ident CONTAINS_WORD padded_ident_or_string ']'
         { $$ = yy.create({ type: 'attribute_contains_word', name: $2, value: $4 }) }
     | '[' padded_ident CONTAINS_PREFIX padded_ident_or_string ']'
+        { $$ = yy.create({ type: 'attribute_contains_prefix', name: $2, value: $4 }) }
+    | '[' padded_ident STARTS_WITH padded_ident_or_string ']'
         { $$ = yy.create({ type: 'attribute_starts_with', name: $2, value: $4 }) }
-    | '[' padded_ident DOES_NOT_CONTAIN padded_ident_or_string ']'
-        { $$ = yy.create({ type: 'attribute_does_not_contain', name: $2, value: $4 }) }
-    | '[' padded_ident CONTAINS padded_ident_or_string ']'
-        { $$ = yy.create({ type: 'attribute_contains', name: $2, value: $4 }) }
-    | '[' padded_ident '=' padded_ident_or_string ']'
-        { $$ = yy.create({ type: 'attribute_equals', name: $2, value: $4 }) }
+    | '[' padded_ident ENDS_WITH padded_ident_or_string ']'
+        { $$ = yy.create({ type: 'attribute_ends_with', name: $2, value: $4 }) }
     ;
 
 padded_ident

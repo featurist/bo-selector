@@ -77,18 +77,31 @@ describe 'parser'
     parses 'a[b *="c"]' as 'a[b *= c]'
     parses 'a[b*="c"]' as 'a[b *= c]'
 
-    parses "a[b != c]"
-    parses "a[b!= c]" as "a[b != c]"
-    parses "a[b !=c]" as "a[b != c]"
-    parses "a[b!=c]" as "a[b != c]"
-    parses "a[b != 'c']" as "a[b != c]"
-    parses "a[b!= 'c']" as "a[b != c]"
-    parses "a[b !='c']" as "a[b != c]"
-    parses "a[b!='c']" as "a[b != c]"
-    parses 'a[b != "c"]' as "a[b != c]"
-    parses 'a[b!= "c"]' as 'a[b != c]'
-    parses 'a[b !="c"]' as 'a[b != c]'
-    parses 'a[b!="c"]' as 'a[b != c]'
+    parses "a[b ^= c]"
+    parses "a[b^= c]" as "a[b ^= c]"
+    parses "a[b ^=c]" as "a[b ^= c]"
+    parses "a[b^=c]" as "a[b ^= c]"
+    parses "a[b ^= 'c']" as "a[b ^= c]"
+    parses "a[b^= 'c']" as "a[b ^= c]"
+    parses "a[b ^='c']" as "a[b ^= c]"
+    parses "a[b^='c']" as "a[b ^= c]"
+    parses 'a[b ^= "c"]' as "a[b ^= c]"
+    parses 'a[b^= "c"]' as 'a[b ^= c]'
+    parses 'a[b ^="c"]' as 'a[b ^= c]'
+    parses 'a[b^="c"]' as 'a[b ^= c]'
+
+    parses "a[b $= c]"
+    parses "a[b$= c]" as "a[b $= c]"
+    parses "a[b $=c]" as "a[b $= c]"
+    parses "a[b$=c]" as "a[b $= c]"
+    parses "a[b $= 'c']" as "a[b $= c]"
+    parses "a[b$= 'c']" as "a[b $= c]"
+    parses "a[b $='c']" as "a[b $= c]"
+    parses "a[b$='c']" as "a[b $= c]"
+    parses 'a[b $= "c"]' as "a[b $= c]"
+    parses 'a[b$= "c"]' as 'a[b $= c]'
+    parses 'a[b $="c"]' as 'a[b $= c]'
+    parses 'a[b$="c"]' as 'a[b $= c]'
 
     parses "a b"
     parses "a > b"

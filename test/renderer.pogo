@@ -37,17 +37,23 @@ Renderer = {
     attribute_equals () =
         "[#(this.name) = #(render(this.value))]"
 
+    attribute_does_not_equal () =
+        "[#(this.name) != #(render(this.value))]"
+
     attribute_contains_word () =
         "[#(this.name) ~= #(render(this.value))]"
+
+    attribute_contains_prefix () =
+        "[#(this.name) |= #(render(this.value))]"
 
     attribute_contains () =
         "[#(this.name) *= #(render(this.value))]"
 
     attribute_starts_with () =
-        "[#(this.name) |= #(render(this.value))]"
+        "[#(this.name) ^= #(render(this.value))]"
 
-    attribute_does_not_contain () =
-        "[#(this.name) != #(render(this.value))]"
+    attribute_ends_with () =
+        "[#(this.name) $= #(render(this.value))]"
 
     pseudo_class () =
         ":#(this.name)"
