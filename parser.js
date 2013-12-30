@@ -99,7 +99,7 @@ case 11: this.$ = yy.create({ type: 'combinator_selector', left: $$[$0-2], right
 break;
 case 12: this.$ = yy.create({ type: 'combinator_selector', left: $$[$0-2], right: $$[$0], combinator: 'descendant' }) 
 break;
-case 13: this.$ = yy.create({ type: 'combinator_selector', left: yy.create({ type: 'element', name: '*', constraints: [] }), right: $$[$0], combinator: 'child' }) 
+case 13: this.$ = yy.create({ type: 'combinator_selector', right: $$[$0], combinator: 'child' }) 
 break;
 case 14: this.$ = yy.create({ type: 'element', name: $$[$0], constraints: [] }) 
 break;

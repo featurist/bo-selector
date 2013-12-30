@@ -26,7 +26,10 @@ Renderer = {
         if (this.combinator == 'child')
             descender := ' > '
 
-        render(this.left) + descender + render(this.right)
+        if (this.left)
+            render(this.left) + descender + render(this.right)
+        else
+            '> ' + render(this.right)
 
     class () =
         ".#(this.name)"

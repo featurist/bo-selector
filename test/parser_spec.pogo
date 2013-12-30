@@ -110,8 +110,8 @@ describe 'parser'
     parses "a>b" as "a > b"
     parses "a>b >c" as "a > b > c"
     parses "a > b > c d"
-    parses "> a" as "* > a"
-    parses "> a > b" as "* > a > b"
+    parses "> a" as "> a"
+    parses "> a > b" as "> a > b"
 
     parses "*:a"
     parses ":a" as "*:a"
@@ -123,7 +123,7 @@ describe 'parser'
     parses "a:b(c)"
     parses "a:b(c > d)"
 
-    parses ":has(> a)" as "*:has(* > a)"
+    parses ":has(> a)" as "*:has(> a)"
 
     parses "a[b = c], c[d]:e:f(g *:h:i[j]:k), :l > m[n ~= o][p = q].r.s" as (
         "a[b = c], c[d]:e:f(g *:h:i[j]:k), *:l > m[n ~= o][p = q].r.s"
