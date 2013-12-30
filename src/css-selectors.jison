@@ -14,6 +14,7 @@
 "$="                     return 'ENDS_WITH';
 \"[^\n\r\f\\"]*\"        return 'SINGLE_QUOTED_STRING';
 \'[^\n\r\f\\']*\'        return 'DOUBLE_QUOTED_STRING';
+\d+                      return 'INTEGER';
 '#'                      return '#';
 ","                      return ',';
 "."                      return '.';
@@ -178,6 +179,11 @@ pseudo
     ;
 
 func
-    : IDENT '(' selector_list ')'
+    : IDENT '(' func_arguments ')'
         { $$ = { type: 'function', name: $1, body: $3 } }
+    ;
+
+func_arguments
+    : selector_list
+    | INTEGER
     ;
