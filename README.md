@@ -8,18 +8,20 @@ A CSS selector parser based on [jison](http://zaach.github.io/jison/)
 
 ```js
 var parser = require('bo-selector').parser;
-var ast = parser.parse('․a[b = c], c[d]:e:f(g *:h:i[j]:k), :l > m[n ~= o]');
+var ast = parser.parse(".a[b = c], c[d]:e:f(g *:h:i[j]:k), :l > m[n ~= 'o']");
 console.log(require('util').inspect(ast, false, null));
 ```
 
-Generates
+...generates:
 
 ```js
 { type: 'selector_list',
   selectors:
    [ { type: 'element',
-       name: 'a',
-       constraints: [ { type: 'attribute_equals', name: 'b', value: 'c' } ] },
+       name: '*',
+       constraints:
+        [ { type: 'class', name: 'a' },
+          { type: 'attribute_equals', name: 'b', value: 'c' } ] },
      { type: 'element',
        name: 'c',
        constraints:
