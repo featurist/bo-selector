@@ -155,13 +155,9 @@ padded_ident_or_string
 
 padded_child_combinator
     : S '>' S
-        { $$ = $2 }
     | S '>'
-        { $$ = $2 }
     | '>' S
-        { $$ = $1 }
     | '>'
-        { $$ = $1 }
     ;
 
 string

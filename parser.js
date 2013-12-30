@@ -145,14 +145,6 @@ case 39: this.$ = $$[$0-1]
 break;
 case 40: this.$ = $$[$0] 
 break;
-case 41: this.$ = $$[$0-1] 
-break;
-case 42: this.$ = $$[$0] 
-break;
-case 43: this.$ = $$[$0-1] 
-break;
-case 44: this.$ = $$[$0] 
-break;
 case 45: this.$ = $$[$0].substr(1, $$[$0].length - 2) 
 break;
 case 46: this.$ = $$[$0].substr(1, $$[$0].length - 2) 
