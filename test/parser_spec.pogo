@@ -104,16 +104,28 @@ describe 'parser'
     parses 'a[b$="c"]' as 'a[b $= c]'
 
     parses "a b"
+
     parses "a > b"
     parses "a> b" as "a > b"
     parses "a >b" as "a > b"
     parses "a>b" as "a > b"
     parses "a>b >c" as "a > b > c"
     parses "a > b > c d"
+
     parses "> a" as "> a"
     parses ">a" as "> a"
     parses ">a:not(>b)" as "> a:not(> b)"
     parses "> a > b" as "> a > b"
+
+    parses "a ~ b"
+    parses "a~ b" as "a ~ b"
+    parses "a ~b" as "a ~ b"
+    parses "a~b" as "a ~ b"
+
+    parses "a + b"
+    parses "a+ b" as "a + b"
+    parses "a +b" as "a + b"
+    parses "a+b" as "a + b"
 
     parses "*:a"
     parses ":a"

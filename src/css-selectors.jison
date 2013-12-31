@@ -27,6 +27,8 @@
 ">"                      return '>';
 "'"                      return "'";
 "*"                      return '*';
+"~"                      return '~';
+"+"                      return '+';
 \s+                      return 'S';
 
 
@@ -76,6 +78,10 @@ combinator_selector
         { $$ = yy.create({ type: 'combinator_selector', left: $1, right: $3, combinator: 'child' }) }
     | selector S simple_selector
         { $$ = yy.create({ type: 'combinator_selector', left: $1, right: $3, combinator: 'descendant' }) }
+    | selector padded_tilde simple_selector
+        { $$ = yy.create({ type: 'previous_sibling', left: $1, right: $3 }) }
+    | selector padded_plus simple_selector
+        { $$ = yy.create({ type: 'adjacent_sibling', left: $1, right: $3 }) }
     | '>' S simple_selector
         { $$ = yy.create({ type: 'immediate_child', child: $3, combinator: 'child' }) }
     | '>' simple_selector
@@ -160,6 +166,20 @@ padded_child_combinator
     | S '>'
     | '>' S
     | '>'
+    ;
+
+padded_tilde
+    : S '~' S
+    | S '~'
+    | '~' S
+    | '~'
+    ;
+
+padded_plus
+    : S '+' S
+    | S '+'
+    | '+' S
+    | '+'
     ;
 
 string

@@ -79,6 +79,12 @@ Renderer = {
     string () =
         "#(this.value)"
 
+    previous_sibling () =
+        "#(render(this.left)) ~ #(render(this.right))"
+
+    adjacent_sibling () =
+        "#(render(this.left)) + #(render(this.right))"
+
     missing () =
         throw (@new Error "Unable to render #(this.type)")
 
