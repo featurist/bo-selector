@@ -159,7 +159,7 @@ case 58: this.$ = yy.create({ type: 'pseudo_func', func: $$[$0] })
 break;
 case 59: this.$ = yy.create({ type: 'pseudo_class', name: $$[$0] }) 
 break;
-case 60: this.$ = { type: 'function', name: $$[$0-3], body: $$[$0-1] } 
+case 60: this.$ = { type: 'function', name: $$[$0-3], args: $$[$0-1] } 
 break;
 case 61: this.$ = { type: 'function', name: $$[$0-2] } 
 break;

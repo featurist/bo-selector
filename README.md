@@ -7,7 +7,7 @@ A CSS selector parser based on [jison](http://zaach.github.io/jison/)
 ### Example
 
 ```js
-var parser = require('bo-selector').parser;
+var parser = require('./bo-selector').parser;
 var ast = parser.parse(".a[b = c], c[d]:e:f(g *:h:i[j]:k), :l > m[n ~= 'o']");
 console.log(require('util').inspect(ast, false, null));
 ```
@@ -17,8 +17,7 @@ console.log(require('util').inspect(ast, false, null));
 ```js
 { type: 'selector_list',
   selectors:
-   [ { type: 'element',
-       name: '*',
+   [ { type: 'constraint_list',
        constraints:
         [ { type: 'class', name: 'a' },
           { type: 'attribute_equals', name: 'b', value: 'c' } ] },
@@ -31,7 +30,7 @@ console.log(require('util').inspect(ast, false, null));
             func:
              { type: 'function',
                name: 'f',
-               body:
+               args:
                 { type: 'selector_list',
                   selectors:
                    [ { type: 'combinator_selector',
@@ -47,13 +46,12 @@ console.log(require('util').inspect(ast, false, null));
                        combinator: 'descendant' } ] } } } ] },
      { type: 'combinator_selector',
        left:
-        { type: 'element',
-          name: '*',
+        { type: 'constraint_list',
           constraints: [ { type: 'pseudo_class', name: 'l' } ] },
        right:
         { type: 'element',
           name: 'm',
-          constraints: [ { type: 'attribute_contains', name: 'n', value: 'o' } ] },
+          constraints: [ { type: 'attribute_contains_word', name: 'n', value: 'o' } ] },
        combinator: 'child' } ] }
 ```
 

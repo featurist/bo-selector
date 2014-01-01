@@ -198,7 +198,7 @@ pseudo
 
 func
     : IDENT '(' func_arguments ')'
-        { $$ = { type: 'function', name: $1, body: $3 } }
+        { $$ = { type: 'function', name: $1, args: $3 } }
     | IDENT '(' ')'
         { $$ = { type: 'function', name: $1 } }
     ;

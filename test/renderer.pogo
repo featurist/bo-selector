@@ -65,8 +65,8 @@ Renderer = {
         ":" + render(this.func)
 
     function () =
-        if (this.body)
-            "#(this.name)(#(render(this.body)))"
+        if (this.args)
+            "#(this.name)(#(render(this.args)))"
         else
             "#(this.name)()"
 
