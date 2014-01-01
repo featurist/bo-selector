@@ -141,6 +141,8 @@ describe 'parser'
     parses ":not(:not(b))" as ":not(:not(b))"
 
     parses "a:nth-child(123)" as "a:nth-child(123)"
+    parses "a:first-child()" as "a:first-child()"
+    parses ":first-child()" as ":first-child()"
 
     parses "a[b = c], c[d]:e:f(g *:h:i[j]:k), :l > m[n ~= o][p = 'q'].r.s" as (
         "a[b = c], c[d]:e:f(g *:h:i[j]:k), :l > m[n ~= o][p = q].r.s"

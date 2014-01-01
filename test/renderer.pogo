@@ -65,7 +65,10 @@ Renderer = {
         ":" + render(this.func)
 
     function () =
-        "#(this.name)(#(render(this.body)))"
+        if (this.body)
+            "#(this.name)(#(render(this.body)))"
+        else
+            "#(this.name)()"
 
     id () =
         "##(this.name)"
