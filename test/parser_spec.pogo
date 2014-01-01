@@ -144,6 +144,21 @@ describe 'parser'
     parses "a:first-child()" as "a:first-child()"
     parses ":first-child()" as ":first-child()"
 
+    parses ":nth-of-type(2n)"
+    parses ":nth-of-type(2n+3)"
+    parses ":nth-of-type(n+3)"
+    parses ":nth-of-type(-n+3)" as ":nth-of-type(-1n+3)"
+
+    parses ":nth-last-of-type(2n)"
+    parses ":nth-last-of-type(2n+3)"
+    parses ":nth-last-of-type(n+3)"
+    parses ":nth-last-of-type(-n+3)" as ":nth-last-of-type(-1n+3)"
+
+    parses ":nth-of-type(odd)"
+    parses ":nth-last-of-type(odd)"
+    parses ":nth-of-type(even)"
+    parses ":nth-last-of-type(even)"
+
     parses "a[b = c], c[d]:e:f(g *:h:i[j]:k), :l > m[n ~= o][p = 'q'].r.s" as (
         "a[b = c], c[d]:e:f(g *:h:i[j]:k), :l > m[n ~= o][p = q].r.s"
     )

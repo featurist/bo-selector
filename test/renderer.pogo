@@ -88,10 +88,25 @@ Renderer = {
     adjacent_sibling () =
         "#(render(this.left)) + #(render(this.right))"
 
+    an () =
+        "#(this.a)n"
+
+    an_plus_b () =
+        "#(this.a)n#(sign(this.b))"
+
+    n_plus_b () =
+        "n#(sign(this.b))"
+
     missing () =
         throw (@new Error "Unable to render #(this.type)")
 
 }
+
+sign (integer) =
+    if (integer >= 0)
+        "+#(integer)"
+    else
+        "-#(integer)"
 
 render = Renderer.render
 

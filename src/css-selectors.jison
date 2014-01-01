@@ -4,6 +4,7 @@
 %lex
 
 %%
+'n'                      return 'n';
 [_a-zA-Z][_a-zA-Z0-9-]*  return 'IDENT';
 <<EOF>>                  return 'EOF';
 \~\=                     return 'CONTAINS_WORD';
@@ -14,6 +15,7 @@
 "$="                     return 'ENDS_WITH';
 \"[^\n\r\f\\"]*\"        return 'SINGLE_QUOTED_STRING';
 \'[^\n\r\f\\']*\'        return 'DOUBLE_QUOTED_STRING';
+[+-]\d+                  return 'SIGNED_INTEGER';
 \d+                      return 'INTEGER';
 '#'                      return '#';
 ","                      return ',';
@@ -29,6 +31,7 @@
 "*"                      return '*';
 "~"                      return '~';
 "+"                      return '+';
+"-"                      return '-';
 \s+                      return 'S';
 
 
@@ -89,7 +92,7 @@ combinator_selector
     ;
 
 element
-    : IDENT
+    : ident
         { $$ = yy.create({ type: 'element', name: $1, constraints: [] }) }
     | '*'
         { $$ = yy.create({ type: 'element', name: $1, constraints: [] }) }
@@ -110,13 +113,18 @@ constraint
     ;
 
 class
-    : '.' IDENT
+    : '.' ident
         { $$ = { type: 'class', name: $2 } }
     ;
 
 hash
-    : '#' IDENT
+    : '#' ident
         { $$ = { type: 'id', name: $2 } }
+    ;
+
+ident
+    : IDENT
+    | n
     ;
 
 attrib
@@ -139,13 +147,13 @@ attrib
     ;
 
 padded_ident
-    : S IDENT S
+    : S ident S
         { $$ = $2 }
-    | S IDENT
+    | S ident
         { $$ = $2 }
-    | IDENT S
+    | ident S
         { $$ = $1 }
-    | IDENT
+    | ident
         { $$ = $1 }
     ;
 
@@ -192,18 +200,47 @@ string
 pseudo
     : ':' func
         { $$ = yy.create({ type: 'pseudo_func', func: $2 }) }
-    | ':' IDENT
+    | ':' ident
         { $$ = yy.create({ type: 'pseudo_class', name: $2 }) }
     ;
 
 func
-    : IDENT '(' func_arguments ')'
+    : ident '(' func_arguments ')'
         { $$ = { type: 'function', name: $1, args: $3 } }
-    | IDENT '(' ')'
+    | ident '(' INTEGER ')'
+        { $$ = { type: 'function', name: $1, args: $3 } }
+    | ident '(' ')'
         { $$ = { type: 'function', name: $1 } }
     ;
 
 func_arguments
     : selector_list
-    | INTEGER
+    | an_plus_b
+    ;
+
+an_plus_b
+    : 'odd'
+        { $$ = { type: 'odd' } }
+    | 'even'
+        { $$ = { type: 'even' } }
+    | signed_integer 'n' signed_integer
+        { $$ = { type: 'an_plus_b', a: $1, b: $3 } }
+    | unsigned_integer 'n' signed_integer
+        { $$ = { type: 'an_plus_b', a: $1, b: $3 } }
+    | 'n' signed_integer
+        { $$ = { type: 'n_plus_b', b: $2 } }
+    | '-' 'n' signed_integer
+        { $$ = { type: 'an_plus_b', a: -1, b: $3 } }
+    | unsigned_integer 'n'
+        { $$ = { type: 'an', a: $1 } }
+    ;
+
+signed_integer
+    : SIGNED_INTEGER
+      { $$ = Number($1) }
+    ;
+
+unsigned_integer
+    : INTEGER
+      { $$ = Number($1) }
     ;
