@@ -15,7 +15,8 @@
 "$="                     return 'ENDS_WITH';
 \"[^\n\r\f\\"]*\"        return 'SINGLE_QUOTED_STRING';
 \'[^\n\r\f\\']*\'        return 'DOUBLE_QUOTED_STRING';
-[+-]\d+                  return 'SIGNED_INTEGER';
+\+\d+                    return 'POSITIVE_INTEGER';
+\-\d+                    return 'NEGATIVE_INTEGER';
 \d+                      return 'INTEGER';
 "(odd)"                  return 'ODD_ARGUMENT';
 "(even)"                 return 'EVEN_ARGUMENT';
@@ -229,20 +230,34 @@ an_plus_b
         { $$ = { type: 'odd' } }
     | 'even'
         { $$ = { type: 'even' } }
-    | signed_integer 'n' signed_integer
+    | negative_integer 'n' signed_integer
+        { $$ = { type: 'an_plus_b', a: $1, b: $3 } }
+    | positive_integer 'n' signed_integer
         { $$ = { type: 'an_plus_b', a: $1, b: $3 } }
     | unsigned_integer 'n' signed_integer
         { $$ = { type: 'an_plus_b', a: $1, b: $3 } }
-    | 'n' signed_integer
-        { $$ = { type: 'n_plus_b', b: $2 } }
     | '-' 'n' signed_integer
         { $$ = { type: 'an_plus_b', a: -1, b: $3 } }
+    | 'n' signed_integer
+        { $$ = { type: 'n_plus_b', b: $2 } }
+    | negative_integer 'n'
+        { $$ = { type: 'an', a: $1 } }
     | unsigned_integer 'n'
         { $$ = { type: 'an', a: $1 } }
     ;
 
 signed_integer
-    : SIGNED_INTEGER
+    : positive_integer
+    | negative_integer
+    ;
+
+negative_integer
+    : NEGATIVE_INTEGER
+      { $$ = Number($1) }
+    ;
+
+positive_integer
+    : POSITIVE_INTEGER
       { $$ = Number($1) }
     ;
 

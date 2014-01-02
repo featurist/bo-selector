@@ -145,14 +145,18 @@ describe 'parser'
     parses ":first-child()" as ":first-child()"
 
     parses ":nth-of-type(2n)"
+    parses ":nth-of-type(23n)"
     parses ":nth-of-type(2n+3)"
     parses ":nth-of-type(n+3)"
     parses ":nth-of-type(-n+3)" as ":nth-of-type(-1n+3)"
+    parses ":nth-of-type(-2n)" as ":nth-of-type(-2n)"
 
     parses ":nth-last-of-type(2n)"
+    parses ":nth-last-of-type(23n)"
     parses ":nth-last-of-type(2n+3)"
     parses ":nth-last-of-type(n+3)"
     parses ":nth-last-of-type(-n+3)" as ":nth-last-of-type(-1n+3)"
+    parses ":nth-last-of-type(-2n)" as ":nth-last-of-type(-2n)"
 
     parses ":nth-of-type(odd)" as ":nth-of-type(<odd>)"
     parses ":nth-last-of-type(odd)" as ":nth-last-of-type(<odd>)"
