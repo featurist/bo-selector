@@ -154,10 +154,10 @@ describe 'parser'
     parses ":nth-last-of-type(n+3)"
     parses ":nth-last-of-type(-n+3)" as ":nth-last-of-type(-1n+3)"
 
-    parses ":nth-of-type(odd)"
-    parses ":nth-last-of-type(odd)"
-    parses ":nth-of-type(even)"
-    parses ":nth-last-of-type(even)"
+    parses ":nth-of-type(odd)" as ":nth-of-type(<odd>)"
+    parses ":nth-last-of-type(odd)" as ":nth-last-of-type(<odd>)"
+    parses ":nth-of-type(even)" as ":nth-of-type(<even>)"
+    parses ":nth-last-of-type(even)" as ":nth-last-of-type(<even>)"
 
     parses "a[b = c], c[d]:e:f(g *:h:i[j]:k), :l > m[n ~= o][p = 'q'].r.s" as (
         "a[b = c], c[d]:e:f(g *:h:i[j]:k), :l > m[n ~= o][p = q].r.s"

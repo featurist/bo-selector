@@ -17,6 +17,8 @@
 \'[^\n\r\f\\']*\'        return 'DOUBLE_QUOTED_STRING';
 [+-]\d+                  return 'SIGNED_INTEGER';
 \d+                      return 'INTEGER';
+"(odd)"                  return 'ODD_ARGUMENT';
+"(even)"                 return 'EVEN_ARGUMENT';
 '#'                      return '#';
 ","                      return ',';
 "."                      return '.';
@@ -205,7 +207,11 @@ pseudo
     ;
 
 func
-    : ident '(' func_arguments ')'
+    : ident ODD_ARGUMENT
+        { $$ = { type: 'function', name: $1, args: { type: 'odd' } } }
+    | ident EVEN_ARGUMENT
+        { $$ = { type: 'function', name: $1, args: { type: 'even' } } }
+    | ident '(' func_arguments ')'
         { $$ = { type: 'function', name: $1, args: $3 } }
     | ident '(' INTEGER ')'
         { $$ = { type: 'function', name: $1, args: $3 } }

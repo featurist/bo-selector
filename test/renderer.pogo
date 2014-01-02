@@ -97,6 +97,12 @@ Renderer = {
     n_plus_b () =
         "n#(sign(this.b))"
 
+    odd () =
+        "<odd>"
+
+    even () =
+        "<even>"
+
     missing () =
         throw (@new Error "Unable to render #(this.type)")
 
