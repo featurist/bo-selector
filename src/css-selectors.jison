@@ -230,25 +230,20 @@ an_plus_b
         { $$ = { type: 'odd' } }
     | 'even'
         { $$ = { type: 'even' } }
-    | negative_integer 'n' signed_integer
+    | negative_integer 'n' positive_integer
         { $$ = { type: 'an_plus_b', a: $1, b: $3 } }
-    | positive_integer 'n' signed_integer
+    | positive_integer 'n' positive_integer
         { $$ = { type: 'an_plus_b', a: $1, b: $3 } }
-    | unsigned_integer 'n' signed_integer
+    | unsigned_integer 'n' positive_integer
         { $$ = { type: 'an_plus_b', a: $1, b: $3 } }
-    | '-' 'n' signed_integer
+    | '-' 'n' positive_integer
         { $$ = { type: 'an_plus_b', a: -1, b: $3 } }
-    | 'n' signed_integer
+    | 'n' positive_integer
         { $$ = { type: 'n_plus_b', b: $2 } }
     | negative_integer 'n'
         { $$ = { type: 'an', a: $1 } }
     | unsigned_integer 'n'
         { $$ = { type: 'an', a: $1 } }
-    ;
-
-signed_integer
-    : positive_integer
-    | negative_integer
     ;
 
 negative_integer
